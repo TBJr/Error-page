@@ -40,6 +40,26 @@ perspec.addEventListener('animationend', function (e) {
                     stackContainer.style.height = "0";
                 }
             });
+
+            // Generate random number of lines of codes between 4 and 10 and add to each card
+            let numLines = randomIntFromInterval(5, 10);
+
+            // Loop through the lines and add them to the DOM
+            for (let index = 0; index < numLines; index++) {
+                let lineLength = randomIntFromInterval(25, 97);
+                var node = document.createElement("li");
+                node.classList.add('node-' + index);
+                elem.querySelector('.code ul').appendChild(node).setAttribute('style', '--linelength: ' + lineLength + '%;');
+
+                // Draw lines of code 1 by 1
+                if (index == 0) {
+                    elem.querySelector('.code ul .node-' + index).classList.add('writeLine');
+                } else {
+                    elem.querySelector('.code ul .node-' + (index -1)).addEventListener('animationend', function (e) {
+                        elem.querySelector('.code ul .node-' + index).classList.add('writeLine');
+                    });
+                }
+            }
         });
     }
 });
